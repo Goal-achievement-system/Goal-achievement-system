@@ -108,7 +108,7 @@ body : Goal, goalId 포함
 #### 지원 메서드
 GET : 카테고리 목록 조회
 #### 응답데이터
-String 
+String 배열
 ### /goals/{goalID}
 {goalID}는 목표의 식별번호로 1이상의 양수
 #### 지원 메서드
