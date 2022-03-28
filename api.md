@@ -104,7 +104,11 @@ Goal 단, goalId는 포함되지 않는다. 포함되더라도 무시된다.
 http 상태코드 : 201
 body : Goal, goalId 포함
 ```
-
+### /goals/categories 
+#### 지원 메서드
+GET : 카테고리 목록 조회
+#### 응답데이터
+String 
 ### /goals/{goalID}
 {goalID}는 목표의 식별번호로 1이상의 양수
 #### 지원 메서드
