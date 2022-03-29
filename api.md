@@ -119,7 +119,7 @@ GET
 http 상태코드 : 200
 Goal 
 ```
-### /goals/{category}
+### /goals/{category}/list
 {category}는 목표의 카테고리로 문자열이다.
 #### 지원 메서드 
 GET
