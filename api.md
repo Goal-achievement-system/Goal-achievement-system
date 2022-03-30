@@ -162,7 +162,6 @@ POST : 목표에 대응되는 인증의 성공검증
 ##### 성공시
 ```
 http 상태코드 : 200
-Certification
 ```
 ### /goals/cert/fail/{goalID}
 #### 지원 메서드
@@ -171,7 +170,6 @@ POST : 목표에 대응되는 인증의 실패검증
 ##### 성공시
 ```
 http 상태코드 : 200
-Certification
 ```
 
 ## 통계관련 api
