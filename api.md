@@ -119,8 +119,9 @@ GET
 http 상태코드 : 200
 Goal 
 ```
-### /goals/{category}/list
+### /goals/{category}/list/{state}
 {category}는 목표의 카테고리로 문자열이다.
+{state}는 목표의 달성 상태를 나타내는 문자열로 all,ongoing,success,fail,hold 중 하나이다.
 #### 지원 메서드 
 GET
 #### 응답데이터
