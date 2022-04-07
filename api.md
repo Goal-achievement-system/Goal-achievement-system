@@ -79,7 +79,7 @@ POST
 ```JSON
 {
     "email" : "example@e.com",
-    "password" : "sha-256 해쉬화된 비밀번호"
+    "password" : "비밀번호"
 }
 ```
 #### 응답
