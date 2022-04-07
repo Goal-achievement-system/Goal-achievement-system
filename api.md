@@ -90,7 +90,13 @@ http 상태코드 : 200
     "Authorization" : "토큰"
 }
 ```
-
+토큰은 JWT이다. header.payload.sign 으로 구성되어있다. payload 부분을 base64 디코딩하면, 다음과 같은 형태의 json을 얻을 수 있다.
+```JSON
+{
+    "exp":  20220407223060,
+    "email": "example@example.com"
+}
+```
 
 ## 목표 관련 api
 ### /goals
