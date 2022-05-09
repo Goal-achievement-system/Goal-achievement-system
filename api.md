@@ -106,79 +106,75 @@ POST
 Goal 단, goalId는 포함되지 않는다. 포함되더라도 무시된다.
 #### 응답 데이터
 ##### 성공시 
-```
-http 상태코드 : 201
-body : Goal, goalId 포함
-```
+
+200 OK, body에 goalId가 포함된 Goal
+
+##### 실패시
+1. json 요청에 email이 자신의 이메일과 일치하지 않는 경우 : 401 UNAUTHORIZED
+2. json 요청에 category가 존재하지 않는 카테고리일 경우 : 400 BAD_REQUEST
+3. json 요청의 money가 사용자의 충전금보다 큰 경우 : 403 FORBIDDEN
 ### /goals/categories 
 #### 지원 메서드
 GET : 카테고리 목록 조회
 #### 응답데이터
-String 배열
+##### 성공시
+200 OK, String 배열 형태의 카테고리 목록 
+##### 실패시
+500 INTERNAL_SERVER_ERROR
 ### /goals/{goalID}
 {goalID}는 목표의 식별번호로 1이상의 양수
 #### 지원 메서드
 GET
 #### 응답데이터
 ##### 성공시
-```
-http 상태코드 : 200
-Goal 
-```
-### /goals/{category}/list/{state}
-{category}는 목표의 카테고리로 문자열이다.
-{state}는 목표의 달성 상태를 나타내는 문자열로 all,ongoing,success,fail,hold 중 하나이다.
+200 OK, body에 goalId가 포함된 Goal
+##### 실패시
+goalId의 Goal이 없는 경우 : 404 NOT_FOUND
+### /goals/{category}/list/{state}/{page}
+1. {category}는 목표의 카테고리로 문자열이다.
+2. {state}는 목표의 달성 상태를 나타내는 문자열로 all,ongoing,success,fail,hold 중 하나이다.
+3. {page}는 페이지다. 1 페이즈부터 존재한다. 
 #### 지원 메서드 
 GET
 #### 응답데이터
-```
-http 상태코드 : 200
-Goal 들로 이루어진 배열
-```
+##### 성공시
+200 OK, body에 Goal의 배열. 최대 9개의 Goal 객체로 이루어짐. 
 ### /goals/cert/{goalId}
 {goalID}는 목표의 식별번호로 1이상의 양수
 #### 지원 메서드 및 의미
-POST : 목표에 대응되는 인증 등록 <br>
-GET : 목표에 대응되는 인증 조회
+1. POST : 목표에 대응되는 인증 등록
+2. GET : 목표에 대응되는 인증 조회
 #### body
 POST : Certification, 단, certId 미포함. 포함되어도 무시
 #### 응답데이터
 ##### 성공시 
-```
-http 상태코드 : 201 (POST), 200(GET)
-Certification. 
-```
-### /goals/cert/{goalId}
-{goalID}는 목표의 식별번호로 1이상의 양수
-#### 지원 메서드 및 의미
-POST : 목표에 대응되는 인증 등록 <br>
-GET : 목표에 대응되는 인증 조회
-#### body
-POST : Certification, 단, certId 미포함. 포함되어도 무시
-#### 응답데이터
-##### 성공시 
-```
-http 상태코드 : 201 (POST), 200(GET)
-Certification. 
-```
-
+1. POST : 200 OK, 생성된 Certification이 body에 포함
+2. GET : 200 OK, 해당되는 Certification이 body에 포함
+##### 실패시
+1. GET 
+    - 해당되는 인증이 없는 경우 : 404 NOT_FOUND
+2. POST
+    - 자신이 등록한 목표가 아닌 인증을 등록 시도할 경우 : 401 UNAUTHORIZED
+    - 이미 해당 목표의 인증이 존재하는 경우 : 409 CONFLICT
+    - 인증이 등록되었으나 모종의 이유로 인증을 가져오지 못한 경우 : 201 CREATED
 ### /goals/cert/success/{goalID}
 #### 지원 메서드
 PUT : 목표에 대응되는 인증의 성공검증
 #### 응답데이터
 ##### 성공시
-```
-http 상태코드 : 200
-```
+200 OK
+##### 실패시
+1. 자신이 등록한 인증을 자신이 검증하려는 경우 : 401 UNAUTHORIZED
+2. 그 외의 경우 : 500 INTERNAL_SERVER_ERROR
 ### /goals/cert/fail/{goalID}
 #### 지원 메서드
 PUT : 목표에 대응되는 인증의 실패검증
 #### 응답데이터
 ##### 성공시
-```
-http 상태코드 : 200
-```
-
+200 OK
+##### 실패시
+1. 자신이 등록한 인증을 자신이 검증하려는 경우 : 401 UNAUTHORIZED
+2. 그 외의 경우 : 500 INTERNAL_SERVER_ERROR
 ## 통계관련 api
 
 ### /statistics/{type}/{year}
@@ -211,12 +207,69 @@ GET : 자신이 등록한 목표에 대한 통계 조회
 
 ## 회원 관련 api
 
+### /members
+#### 지원 메서드
+POST
+#### body
+Member. 단, money는 포함되지 않음. 포함되도 무시함
+#### 응답 데이터
+##### 성공시
+200 OK
+##### 실패시
+이미 가입된 이메일인경우 : 409 CONFLICT
+
 ### /members/myinfo
 #### 지원 메서드
-GET : 개인정보 조회<br>
-PUT : 개인정보 수정
+1. GET : 개인정보 조회
+2. PUT : 개인정보 수정
 #### body
-PUT : Member. 수정하고싶은 값만 포함. 단, 이메일은 무시됨.
+PUT : Member. 수정하기 싫은 값은 기존 값을 그대로 전달해야 함. 단, 이메일은 무시됨.
 #### 응답데이터
-Member. 단, password는 포함되지 않음.
-
+##### 성공시 
+1. GET : 200 OK, Member가 body에 포함
+2. PUT : 200 OK, 변경된 내용이 반영된 Member가 body에 포함
+##### 실패시
+1. GET 
+    - 인증토큰이 유효하지 않거나, 로그인되지 않은 경우 : 401 UNAUTHORIZED
+2. PUT
+    - 타인의 정보를 변경시도한 경우 : 401 UNAUTHORIZED
+    - 해당되는 Member가 없는 경우(심각한 무결성 오류상태) : 500 INTERNAL_SERVER_ERROR
+### /myinfo/goals/{state}/{page}
+1. {state}는 목표의 달성 상태를 나타내는 문자열로 all,ongoing,success,fail,hold 중 하나이다.
+2. {page}는 페이지다. 1 페이즈부터 존재한다. 
+#### 지원 메서드
+GET : 자신이 등록한 목표 목록 조회
+#### 응답 데이터
+##### 성공시
+200 OK, 최대 6개의 Goal이 포함된 배열
+##### 실패시
+1. 로그인이 제대로 되지 않은 경우 : 401 UNAUTHORIZED
+2. state가 잘못된 경우 : 400 BAD_REQUEST
+### /myinfo/notifications
+#### 지원 메서드
+GET : 자신의 알림 목록을 조회
+#### 응답 데이터
+##### 성공시
+200 OK, 모든 알림 이 포함된 배열
+##### 실패시
+1. 500 INTERNAL_SERVER_ERROR
+### /myinfo/charge
+#### 지원 메서드 
+PUT : 충전
+#### body
+Member. email, password, money 필수 나머진 무시
+#### 응답 데이터
+##### 성공시
+200 OK
+##### 실패시
+1. 비밀번호가 잘못된 경우 : 401 UNAUTHORIZED 
+### /myinfo/refund
+#### 지원 메서드 
+PUT : 인출
+#### body
+Member. email, password, money 필수 나머진 무시
+#### 응답 데이터
+##### 성공시
+200 OK
+##### 실패시
+1. 비밀번호가 잘못된 경우 : 401 UNAUTHORIZED 
