@@ -131,7 +131,7 @@ GET
 ##### 실패시
 goalId의 Goal이 없는 경우 : 404 NOT_FOUND
 ### /goals/{category}/list/{state}/{page}
-1. {category}는 목표의 카테고리로 문자열이다.
+1. {category}는 목표의 카테고리로 문자열이다.all일 경우 모든 카테고리를 
 2. {state}는 목표의 달성 상태를 나타내는 문자열로 all,ongoing,success,fail,hold 중 하나이다.
 3. {page}는 페이지다. 1 페이즈부터 존재한다. 
 #### 지원 메서드 
