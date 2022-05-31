@@ -177,34 +177,32 @@ PUT : 목표에 대응되는 인증의 실패검증
 2. 그 외의 경우 : 500 INTERNAL_SERVER_ERROR
 ## 통계관련 api
 
-### /statistics/{type}/{year}
-{type} 은 어떤 통계를 의미하는지 표현함.
-1. all : 전체 등록된 목표 갯수
-2. success : 성공한 목표 갯수
-3. fail : 실패한 목표 갯수
-4. ongoing : 현재 진행중인 목표 개수
-5. hold : 검증 보류중인 목표 개수
-
-{year}는 통계대상 년도를 의미함. 4자리 숫자 
+### /statistics/total
 #### 지원 메서드
 GET : 전체 통계 조회
+<br>인증 토큰 필요없음.
 #### 응답 데이터 
-숫자
+```JSON
+{
+    "totalSuccessGoalCount": 1, // 등록된 목표 중 성공한 목표 개수
+    "totalGoalCount": 4, // 전체 목표 개수
+    "totalOngoingGoalCount": 2, // 현재 진행중인 목표 개수
+    "totalFailGoalCount": 0 // 실패한 목표 개수
+}
+```
 
-### /statistics/private/{type}/{year}
-{type} 은 어떤 통계를 의미하는지 표현함.
-1. all : 전체 등록된 목표 갯수
-2. success : 성공한 목표 갯수
-3. fail : 실패한 목표 갯수
-4. ongoing : 현재 진행중인 목표 개수
-5. hold : 검증 보류중인 목표 개수
-
-{year}는 통계대상 년도를 의미함. 4자리 숫자 
+### /statistics/mine
 #### 지원 메서드
 GET : 자신이 등록한 목표에 대한 통계 조회
 #### 응답 데이터 
-숫자
-
+```JSON
+{
+    "totalSuccessGoalCount": 1, // 등록된 목표 중 성공한 목표 개수
+    "totalGoalCount": 4, // 전체 목표 개수
+    "totalOngoingGoalCount": 2, // 현재 진행중인 목표 개수
+    "totalFailGoalCount": 0 // 실패한 목표 개수
+}
+```
 ## 회원 관련 api
 
 ### /members
