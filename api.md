@@ -69,7 +69,7 @@
 6. money는 회원의 충전금 잔액이다.
 
 ## 인증 키
-회원 가입과 로그인을 제외한 모든 요청은 Authorization 헤더에 유효한 토큰을 포함해야 한다.<br>
+회원 가입, 로그인, 이메일 중복확인등 몇개의 특별한 경우(/api/members","/api/members/login","/api/admin","/api/statistics/total","/api/admin/**","/api/members/check/email/*)를 제외한 모든 요청은 Authorization 헤더에 유효한 토큰을 포함해야 한다.<br>
 인증키를 발급받기 위해서는 다음 api를 사용하면 된다.
 
 ### /members/login
@@ -97,7 +97,6 @@ http 상태코드 : 200
     "email": "example@example.com"
 }
 ```
-
 ## 목표 관련 api
 ### /goals
 #### 지원 메서드 
@@ -215,7 +214,7 @@ Member. 단, money는 포함되지 않음. 포함되도 무시함
 200 OK
 ##### 실패시
 이미 가입된 이메일인경우 : 409 CONFLICT
-### /members/{email}
+### /members/check/email/{email}
 #### 지원 메서드
 {email} : 이메일
 1. GET : 해당 이메일로 회원가입이 가능한지 확인
