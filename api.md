@@ -238,7 +238,7 @@ PUT : Member. 수정하기 싫은 값은 기존 값을 그대로 전달해야 �
     - 타인의 정보를 변경시도한 경우 : 401 UNAUTHORIZED
     - 해당되는 Member가 없는 경우(심각한 무결성 오류상태) : 500 INTERNAL_SERVER_ERROR
 ### /myinfo/goals/{state}/{page}
-1. {state}는 목표의 달성 상태를 나타내는 문자열로 all,ongoing,success,fail,hold 중 하나이다.
+1. {state}는 목표의 달성 상태를 나타내는 문자열로 all, ongoing, success, fail, hold, oncertification 중 하나이다.
 2. {page}는 페이지다. 1 페이즈부터 존재한다. 
 #### 지원 메서드
 GET : 자신이 등록한 목표 목록 조회
