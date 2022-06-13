@@ -137,6 +137,14 @@ http 상태코드 : 200
     "email": "example@example.com"
 }
 ```
+## 이미지 관련 api
+### /api/image/announcement/{announcementId}
+#### 지원 메서드
+GET : 해당 공지사항 이미지를 조회한다.
+#### 응답 데이터 
+##### 성공시
+200 OK, 이미지
+
 ## 목표 관련 api
 ### /goals
 #### 지원 메서드 
@@ -316,3 +324,124 @@ Member. email, password, money 필수 나머진 무시
 200 OK
 ##### 실패시
 1. 비밀번호가 잘못된 경우 : 401 UNAUTHORIZED 
+
+## 관리자 api
+### /admin/login
+#### 지원 메서드
+POST : 관리자 로그인
+#### body
+```JSON
+{
+    "email" : "admin@e.com",
+    "password" : "password"
+}
+```
+#### 응답
+##### 성공시
+http 상태코드 : 200
+```JSON
+{
+    "Authorization" : "토큰"
+}
+```
+토큰은 JWT이다. header.payload.sign 으로 구성되어있다. payload 부분을 base64 디코딩하면, 다음과 같은 형태의 json을 얻을 수 있다.
+```JSON
+{
+    "exp":  20220407223060,
+    "email": "example@example.com"
+}
+```
+### /admin/goals/hold/{page}
+page : 페이지
+#### 지원 메서드 
+GET : 보류중인 목표 및 인증 조회 한 페이지당 최대 9개의 객체가 포함됨.
+#### 응답
+200 OK
+```JSON
+[
+    {
+        "goal": {
+            "goalId": 12,
+            "memberEmail": "example@e.com",
+            "category": "운동",
+            "goalName": "testGoalName",
+            "content": "testGoalContent",
+            "limitDate": "2022-08-27T10:45:04.000+00:00",
+            "money": 10000,
+            "reward": "high",
+            "verificationResult": "hold"
+        },
+        "certification": {
+            "certId": 0,
+            "goalId": 0,
+            "content": null,
+            "image": null,
+            "requireSuccessCount": 0,
+            "successCount": 0,
+            "failCount": 0,
+            "verificationResult": null
+        }
+    }
+    ,
+    {
+        "goal": {
+            "goalId": 13,
+            "memberEmail": "example@e.com",
+            "category": "운동",
+            "goalName": "testGoalName",
+            "content": "testGoalContent",
+            "limitDate": "2022-08-28T10:45:04.000+00:00",
+            "money": 10000,
+            "reward": "high",
+            "verificationResult": "hold"
+        },
+        "certification": {
+            "certId": 0,
+            "goalId": 0,
+            "content": null,
+            "image": null,
+            "requireSuccessCount": 0,
+            "successCount": 0,
+            "failCount": 0,
+            "verificationResult": null
+        }
+    }
+]
+```
+### /admin/goals/cert/success/{goalId}
+#### 지원 메서드
+GET : goalId 에 해당하는 목표를 성공판정.
+#### 응답 
+200 OK
+<br>
+실패시 500 
+
+### /admin/goals/cert/fail/{goalId}
+#### 지원 메서드
+GET : goalId 에 해당하는 목표를 성공판정.
+#### 응답 
+200 OK
+<br>
+실패시 500 
+
+### /admin/announcement
+#### 지원 메서드
+POST : 공지사항 등록
+#### body
+```JSON
+{
+    "title":"dasdad", // 공지사항 제목
+    "description":"dsda", //공지사항 간단 설명
+    "image" : "data URI" // 공지사항의 본문에 해당하는 이미지의 Data URI
+}
+```
+#### 응답
+```JSON
+{
+    "announcementId": 2, // 공지사항 번호
+    "title": "dasdad", 
+    "description": "dsda",
+    "image": "announcement/2", // 이미지 경로
+    "date": "2022-06-13T13:51:09.512+00:00" // 작성 시간
+}
+```
