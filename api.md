@@ -441,7 +441,62 @@ POST : 공지사항 등록
     "announcementId": 2, // 공지사항 번호
     "title": "dasdad", 
     "description": "dsda",
-    "image": "announcement/2", // 이미지 경로
+    "image": "", // 레거시 흔적. 무시하면 됨.
     "date": "2022-06-13T13:51:09.512+00:00" // 작성 시간
+}
+```
+## 기타 api
+### /api/announcements/list/{page}
+page : 페이지. 한 페이지당 6개씩 
+#### 지원 메서드
+GET 공지사항 목록 조회 
+#### 응답 데이터
+```JSON
+{
+    "maxPage": 2, // 최대 페이지
+    "announcements": [
+        {
+            "announcementId": 1, // 공지사항 번호
+            "title": "dasdad", //공지사항 제목
+            "description": "dsda", //공지사항 설명
+            "image": null, // 의미없는 값
+            "date": "2022-06-13T14:48:08.000+00:00" // 작성 시간
+        },
+        {
+            "announcementId": 2,
+            "title": "dasdad",
+            "description": "dsda",
+            "image": null,
+            "date": "2022-06-13T14:52:00.000+00:00"
+        },
+        {
+            "announcementId": 3,
+            "title": "dasdad",
+            "description": "dsda",
+            "image": null,
+            "date": "2022-06-13T14:56:30.000+00:00"
+        },
+        {
+            "announcementId": 4,
+            "title": "dasdad",
+            "description": "dsda",
+            "image": null,
+            "date": "2022-06-13T15:11:39.000+00:00"
+        },
+        {
+            "announcementId": 5,
+            "title": "dasdad",
+            "description": "dsda",
+            "image": null,
+            "date": "2022-06-13T15:11:40.000+00:00"
+        },
+        {
+            "announcementId": 6,
+            "title": "dasdad",
+            "description": "dsda",
+            "image": null,
+            "date": "2022-06-13T15:11:41.000+00:00"
+        }
+    ]
 }
 ```
