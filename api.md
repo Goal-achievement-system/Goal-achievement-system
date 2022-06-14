@@ -285,7 +285,7 @@ PUT : Member. 수정하기 싫은 값은 기존 값을 그대로 전달해야 �
 2. PUT
     - 타인의 정보를 변경시도한 경우 : 401 UNAUTHORIZED
     - 해당되는 Member가 없는 경우(심각한 무결성 오류상태) : 500 INTERNAL_SERVER_ERROR
-### /myinfo/goals/{state}/{page}
+### /members/myinfo/goals/{state}/{page}
 1. {state}는 목표의 달성 상태를 나타내는 문자열로 all, ongoing, success, fail, hold, oncertification 중 하나이다.
 2. {page}는 페이지다. 1 페이즈부터 존재한다. 
 #### 지원 메서드
@@ -296,7 +296,18 @@ GET : 자신이 등록한 목표 목록 조회
 ##### 실패시
 1. 로그인이 제대로 되지 않은 경우 : 401 UNAUTHORIZED
 2. state가 잘못된 경우 : 400 BAD_REQUEST
-### /myinfo/notifications
+### /members/myinfo/cert/{state}/{page}
+1. {state}는 목표의 달성 상태를 나타내는 문자열로 all, ongoing, success, fail, hold, oncertification 중 하나이다.
+2. {page}는 페이지다. 1 페이즈부터 존재한다. 페이지당 6개씩 불러온다.
+#### 지원 메서드
+GET : 자신이 등록한 인증 목록 조회
+#### 응답 데이터
+##### 성공시
+200 OK, 최대페이지와 최대 6개의 Certification이 포함된 배열
+##### 실패시
+1. 로그인이 제대로 되지 않은 경우 : 401 UNAUTHORIZED
+2. state가 잘못된 경우 : 400 BAD_REQUEST
+### /members/myinfo/notifications
 #### 지원 메서드
 GET : 자신의 알림 목록을 조회
 #### 응답 데이터
@@ -304,7 +315,7 @@ GET : 자신의 알림 목록을 조회
 200 OK, 모든 알림 이 포함된 배열
 ##### 실패시
 1. 500 INTERNAL_SERVER_ERROR
-### /myinfo/charge
+### /members/myinfo/charge
 #### 지원 메서드 
 PUT : 충전
 #### body
@@ -314,7 +325,7 @@ Member. email, password, money 필수 나머진 무시
 200 OK
 ##### 실패시
 1. 비밀번호가 잘못된 경우 : 401 UNAUTHORIZED 
-### /myinfo/refund
+### /members/myinfo/refund
 #### 지원 메서드 
 PUT : 인출
 #### body
