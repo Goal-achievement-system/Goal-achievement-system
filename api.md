@@ -150,7 +150,17 @@ GET : 해당 인증의 이미지를 조회한다.
 
 ### /api/image/announcement/{announcementId}
 #### 지원 메서드
-GET : 해당 공지사항 이미지를 조회한다.
+GET : 해당 공지사항 본문 이미지를 조회한다.
+#### 응답 데이터 
+##### 성공시
+200 OK, 이미지
+##### 실패시
+1. 404 : 이미지가 없는경우(= 없는 공지사항 번호를 조회한 경우)
+2. 500 : 서버에러로 이미지를 읽을 수 없는 경우
+
+### /api/image/announcement/banner/{announcementId}
+#### 지원 메서드
+GET : 해당 공지사항 배너 이미지를 조회한다.
 #### 응답 데이터 
 ##### 성공시
 200 OK, 이미지
@@ -456,17 +466,19 @@ POST : 공지사항 등록
 {
     "title":"dasdad", // 공지사항 제목
     "description":"dsda", //공지사항 간단 설명
-    "image" : "data URI" // 공지사항의 본문에 해당하는 이미지의 Data URI
+    "image" : "data URI", // 공지사항의 본문에 해당하는 이미지의 Data URI
+    "bannerImage" : "data URI", // 공지사항의 배너에 해당하는 이미지의 Data URI
+    "activation":true // 공지사항의 활성여부를 결정하는 값
 }
 ```
 #### 응답
 ```JSON
 {
-    "announcementId": 2, // 공지사항 번호
-    "title": "dasdad", 
-    "description": "dsda",
-    "image": "", // 레거시 흔적. 무시하면 됨.
-    "date": "2022-06-13T13:51:09.512+00:00" // 작성 시간
+    "announcementId": 1, // 공지사항 번호
+    "title": "dasdad", // 제목
+    "description": "dsda", // 설명
+    "date": "2022-06-28T12:04:11.204+00:00", //작성 시간
+    "activation": true //활성상태
 }
 ```
 ## 기타 api
@@ -477,49 +489,21 @@ GET 공지사항 목록 조회
 #### 응답 데이터
 ```JSON
 {
-    "maxPage": 2, // 최대 페이지
+    "maxPage": 1, // 최대 페이지
     "announcements": [
         {
             "announcementId": 1, // 공지사항 번호
-            "title": "dasdad", //공지사항 제목
-            "description": "dsda", //공지사항 설명
-            "image": null, // 의미없는 값
-            "date": "2022-06-13T14:48:08.000+00:00" // 작성 시간
+            "title": "dasdad", // 제목
+            "description": "dsda", // 설명
+            "date": "2022-06-28T12:04:11.204+00:00", //작성 시간
+            "activation": true //활성상태
         },
         {
-            "announcementId": 2,
-            "title": "dasdad",
-            "description": "dsda",
-            "image": null,
-            "date": "2022-06-13T14:52:00.000+00:00"
-        },
-        {
-            "announcementId": 3,
-            "title": "dasdad",
-            "description": "dsda",
-            "image": null,
-            "date": "2022-06-13T14:56:30.000+00:00"
-        },
-        {
-            "announcementId": 4,
-            "title": "dasdad",
-            "description": "dsda",
-            "image": null,
-            "date": "2022-06-13T15:11:39.000+00:00"
-        },
-        {
-            "announcementId": 5,
-            "title": "dasdad",
-            "description": "dsda",
-            "image": null,
-            "date": "2022-06-13T15:11:40.000+00:00"
-        },
-        {
-            "announcementId": 6,
-            "title": "dasdad",
-            "description": "dsda",
-            "image": null,
-            "date": "2022-06-13T15:11:41.000+00:00"
+            "announcementId": 2, // 공지사항 번호
+            "title": "dasdad", // 제목
+            "description": "dsda", // 설명
+            "date": "2022-06-29T12:04:11.204+00:00", //작성 시간
+            "activation": true //활성상태
         }
     ]
 }
