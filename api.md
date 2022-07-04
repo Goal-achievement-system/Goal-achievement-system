@@ -69,7 +69,24 @@
 4. sex는 회원의 성별이다. FEMALE, MALE, UNKNOWN 중 하나이다.
 5. age는 회원의 나이이다.
 6. money는 회원의 충전금 잔액이다.
-
+### Notification
+```JSON
+{
+    "notificationId": 8,
+    "content": "카테고리 : 목표검증;실패검증 횟수가 누적되어 인증이 보류되었습니다. 이의제기 하기 전 까지 판정이 보류됩니다.",
+    "memberEmail": "cks@naver.com",
+    "date": "2022-06-29T10:38:47.000+00:00",
+    "url": "GET /api/members/myinfo",
+    "read": true
+}
+```
+#### 각 항목별 설명
+1. notificationId는 알림의 고유 인덱스다.
+2. content 는 알림의 카테고리와 알림 본문을 의미한다. ";" 를 기준으로 좌측에는 카테고리, 우측에는 알림 본문이 포함된다.
+3. memberEmail 은 알림의 소유주의 이메일을 의미한다.
+4. date는 알림 발생 시간을 의미한다.
+5. url은 알림을 눌렀을 시 이동할 url을 의미한다.
+6. read는 알림의 읽음여부를 의미한다.
 ### Error
 각종 api에서 잘못된 요청이나 서버의 문제로 인해 에러를 반환할 때 다음과 같은 형태의 JSON을 반환한다. HTTP 상태코드는 각 api에서 다로 정의한다.
 ```JSON
@@ -335,9 +352,18 @@ GET : 자신이 등록한 인증 목록 조회
 GET : 자신의 알림 목록을 조회
 #### 응답 데이터
 ##### 성공시
-200 OK, 모든 알림 이 포함된 배열
+200 OK, Notification의 배열
 ##### 실패시
 1. 500 INTERNAL_SERVER_ERROR
+### /members/myinfo/notifications/{notiId}
+#### 지원 메서드
+PUT : notiification_id가 notiId인 알림을 읽기
+#### 응답 데이터
+##### 성공시
+200 OK
+##### 실패시
+1. 403 FORBIDDEN : 자신의 알림이 아닌 것을 읽기 시도한 경우
+2. 404 NOTFOUND : 해당 알림이 없는 경우
 ### /members/myinfo/charge
 #### 지원 메서드 
 PUT : 충전
