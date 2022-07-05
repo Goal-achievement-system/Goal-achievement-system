@@ -487,7 +487,9 @@ GET : goalId 에 해당하는 목표를 성공판정.
 ### /admin/announcement
 #### 지원 메서드
 POST : 공지사항 등록
+PUT : 공지사항 활성상태 변경
 #### body
+POST
 ```JSON
 {
     "title":"dasdad", // 공지사항 제목
@@ -497,7 +499,17 @@ POST : 공지사항 등록
     "activation":true // 공지사항의 활성여부를 결정하는 값
 }
 ```
+PUT
+```JSON
+{
+    "announcementId": 1, // 공지사항 번호
+    "activation": true //활성상태
+}
+```
+
 #### 응답
+POST </br>
+200 OK
 ```JSON
 {
     "announcementId": 1, // 공지사항 번호
@@ -507,30 +519,86 @@ POST : 공지사항 등록
     "activation": true //활성상태
 }
 ```
-## 기타 api
-### /api/announcements/list/{page}
-page : 페이지. 한 페이지당 6개씩 
+PUT
+</br>
+1. 성공시 : 200 OK
+2. 해당 공지사항이 없을 시 : 404 NOT_FOUND 
+
+###  /admin/announcements/list/{page}
 #### 지원 메서드
-GET 공지사항 목록 조회 
-#### 응답 데이터
+GET : 공지사항을 페이지별로 조회한다. 활성상태와 관련없이 모두 조회한다
+#### 응답
 ```JSON
 {
-    "maxPage": 1, // 최대 페이지
+    "maxPage": 2,
     "announcements": [
         {
-            "announcementId": 1, // 공지사항 번호
-            "title": "dasdad", // 제목
-            "description": "dsda", // 설명
-            "date": "2022-06-28T12:04:11.204+00:00", //작성 시간
-            "activation": true //활성상태
+            "announcementId": 1,
+            "title": "dasdad",
+            "description": "description",
+            "date": "2022-06-13T14:48:08.000+00:00",
+            "activation": false
         },
         {
-            "announcementId": 2, // 공지사항 번호
-            "title": "dasdad", // 제목
-            "description": "dsda", // 설명
-            "date": "2022-06-29T12:04:11.204+00:00", //작성 시간
-            "activation": true //활성상태
+            "announcementId": 2,
+            "title": "dasdad",
+            "description": "description",
+            "date": "2022-06-13T14:52:00.000+00:00",
+            "activation": false
+        },
+        {
+            "announcementId": 3,
+            "title": "dasdad",
+            "description": "description",
+            "date": "2022-06-13T14:56:30.000+00:00",
+            "activation": false
+        },
+        {
+            "announcementId": 4,
+            "title": "dasdad",
+            "description": "description",
+            "date": "2022-06-13T15:11:39.000+00:00",
+            "activation": false
+        },
+        {
+            "announcementId": 5,
+            "title": "dasdad",
+            "description": "description",
+            "date": "2022-06-13T15:11:40.000+00:00",
+            "activation": false
+        },
+        {
+            "announcementId": 6,
+            "title": "dasdad",
+            "description": "description",
+            "date": "2022-06-13T15:11:41.000+00:00",
+            "activation": false
         }
     ]
 }
+```
+
+## 기타 api
+### /api/announcements/list
+#### 지원 메서드
+GET 공지사항 목록 조회 
+#### 응답 데이터
+공지사항의 배열. 활성상태 공지사항만 포함됨
+```JSON
+[
+    {
+        "announcementId": 11,
+        "title": "dasdad",
+        "description": "description",
+        "date": "2022-06-28T11:52:16.000+00:00",
+        "activation": true
+    },
+    {
+        "announcementId": 12,
+        "title": "dasdad",
+        "description": "description",
+        "date": "2022-06-28T11:58:47.000+00:00",
+        "activation": true
+    }
+]
 ```
