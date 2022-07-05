@@ -384,7 +384,14 @@ Member. email, password, money 필수 나머진 무시
 200 OK
 ##### 실패시
 1. 비밀번호가 잘못된 경우 : 401 UNAUTHORIZED 
-
+### /members/myinfo/withdrawal
+#### 지원메서드
+DELETE : 회원 탈퇴
+#### 요청 헤더
+password : 비밀번호
+#### 응답
+1. 성공했을 때 200 OK
+2. 비밀번호가 틀렸을 때 : 403 FORBIDDEN
 ## 관리자 api
 ### /admin/login
 #### 지원 메서드
