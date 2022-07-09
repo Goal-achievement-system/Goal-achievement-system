@@ -314,7 +314,16 @@ Member. 단, money는 포함되지 않음. 포함되도 무시함
 1. GET : 개인정보 조회
 2. PUT : 개인정보 수정
 #### body
-PUT : Member. 수정하기 싫은 값은 기존 값을 그대로 전달해야 함. 단, 이메일은 무시됨.
+PUT : Member. email은 자신의 이메일을 입력해야 하고, password는 현재 비밀번호를 입력해야 함. nickname, sex, age 를 변경할 수 있음. 변경하기 싫은 경우 기존 값을 입력해야 함.
+```JSON
+{
+"email": "example@e.com",
+"password": "password",
+"nickName": "nickname",
+"sex": "FEMALE",
+"age": 20
+}
+```
 #### 응답데이터
 ##### 성공시 
 1. GET : 200 OK, Member가 body에 포함
@@ -325,6 +334,22 @@ PUT : Member. 수정하기 싫은 값은 기존 값을 그대로 전달해야 �
 2. PUT
     - 타인의 정보를 변경시도한 경우 : 401 UNAUTHORIZED
     - 해당되는 Member가 없는 경우(심각한 무결성 오류상태) : 500 INTERNAL_SERVER_ERROR
+### /members/myinfo/password
+#### 지원 메서드
+PUT : 비밀번호 수정
+#### body
+```JSON
+{
+"password": "password", // 현재 비밀번호
+"repeat" : "password", //현재 비밀번호 반복 password와 같아야 함
+"newPassword" : "password2" // 바꿀 비밀번호
+}
+```
+#### 응답데이터
+##### 성공시 
+200 OK
+##### 실패시
+401 UNAUTHORIZED : 비밀번호와 비밀번호 반복이 일치하지 않거나, 기존 비밀번호를 잘못 입력한 경우
 ### /members/myinfo/goals/{state}/{page}
 1. {state}는 목표의 달성 상태를 나타내는 문자열로 all, ongoing, success, fail, hold, oncertification 중 하나이다.
 2. {page}는 페이지다. 1 페이즈부터 존재한다. 
